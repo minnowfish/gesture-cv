@@ -19,10 +19,10 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 class HandTracker:
     def __init__(self):
-        self.latest_result = None
+        self._latest_result = None
 
     def print_result(self, result: HandLandmarkerResult, output_image: mp.Image, timestamp_ms: int):
-        self.latest_result = result
+        self._latest_result = result
         print(f'hand landmarker result: {result}')
     
     def run(self):
@@ -48,7 +48,7 @@ class HandTracker:
 
                 mp_image = mp.Image(mp.ImageFormat.SRGB, rgb_frame)
                 landmarker.detect_async(mp_image, int((time.time() - start) * 1000))
-                result = self.latest_result
+                result = self._latest_result
                 if result is not None:
                     for hand in result.hand_landmarks:
                         for landmark in hand:
