@@ -1,14 +1,7 @@
 import cv2
 import mediapipe as mp
-from mediapipe.tasks import python
-from mediapipe.tasks.python import vision
-
 import time
-from typing import TypeAlias
 
-_RADIUS = 5
-_COLOR = (0, 255, 0)
-_THICKNESS = 2
 _MODEL_PATH = 'training/hand_landmarker.task'
 
 BaseOptions = mp.tasks.BaseOptions
