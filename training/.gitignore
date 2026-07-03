@@ -1,0 +1,10 @@
+# python 
+venv/
+__pycache__/
+
+
+# training samples
+data/*/*.csv
+
+# model
+hand_landmarker.task
