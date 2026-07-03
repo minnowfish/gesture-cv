@@ -6,7 +6,7 @@ import csv
 
 
 class DataRecorder:
-    def __init__(self, output_dir, clip_length = 60):
+    def __init__(self, output_dir = "data", clip_length = 60):
         self.output_dir: str = output_dir
         self.clip_length: int = clip_length
         self.is_recording: bool = False
