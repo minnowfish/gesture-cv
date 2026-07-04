@@ -10,18 +10,21 @@ HandLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
 HandLandmarkerResult = mp.tasks.vision.HandLandmarkerResult
 VisionRunningMode = mp.tasks.vision.RunningMode
 
+
 class HandTracker:
+
     def __init__(self):
         self._latest_result = None
         options = HandLandmarkerOptions(
-            base_options = BaseOptions(model_asset_path=_MODEL_PATH),
-            running_mode = VisionRunningMode.LIVE_STREAM,
-            num_hands = 2,
+            base_options=BaseOptions(model_asset_path=_MODEL_PATH),
+            running_mode=VisionRunningMode.LIVE_STREAM,
+            num_hands=2,
             result_callback=self._on_result)
         self._landmarker = HandLandmarker.create_from_options(options)
         self._start_time = time.time()
 
-    def _on_result(self, result: HandLandmarkerResult, output_image: mp.Image, timestamp_ms: int):
+    def _on_result(self, result: HandLandmarkerResult, output_image: mp.Image,
+                   timestamp_ms: int):
         self._latest_result = result
         # print(f'hand landmarker result: {result}')
 
@@ -37,8 +40,6 @@ class HandTracker:
     def close(self) -> None:
         self._landmarker.close()
 
-
-
     # To be moved to main function
     # def run(self):
     #     options = HandLandmarkerOptions(
@@ -52,7 +53,7 @@ class HandTracker:
 
     #         frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
     #         frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            
+
     #         start = time.time()
     #         while True:
     #             ret, frame = cam.read()
