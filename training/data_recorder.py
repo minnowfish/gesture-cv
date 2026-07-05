@@ -49,7 +49,3 @@ class DataRecorder:
             self.is_recording = False
             self.current_clip = []
             self.current_label = None
-
-
-# def main():
-#     # TODO()
