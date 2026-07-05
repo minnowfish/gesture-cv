@@ -3,24 +3,14 @@ import mediapipe as mp
 from data_recorder import DataRecorder
 from data_types import Gesture
 from hand_tracker import HandTracker
-
-_RADIUS = 5
-_COLOR = (0, 255, 0)
-_THICKNESS = 2
+from data_types import RADIUS, COLOR, THICKNESS
+from utils import flatten_landmarks
 
 keyToGesture: dict[str, Gesture] = {
     '1': Gesture.GRAB,
     '2': Gesture.PINCH_OPEN,
     '3': Gesture.PINCH_CLOSE,
 }
-
-
-def _flatten_landmarks(landmarks) -> list[float]:
-    flat = []
-    for landmark in landmarks:
-        flat.extend([landmark.x, landmark.y, landmark.z])
-    return flat
-
 
 def main():
     hand_tracker = HandTracker()
@@ -43,8 +33,8 @@ def main():
                     for landmark in hand:
                         pixel_x = int(landmark.x * frame_width)
                         pixel_y = int(landmark.y * frame_height)
-                        cv2.circle(frame, (pixel_x, pixel_y), _RADIUS, _COLOR,
-                                   _THICKNESS)
+                        cv2.circle(frame, (pixel_x, pixel_y), RADIUS, COLOR,
+                                   THICKNESS)
 
             cv2.imshow('Camera', frame)
 
@@ -59,7 +49,7 @@ def main():
 
             if result is not None and result.hand_landmarks and data_recorder.is_recording:
                 data_recorder.add_frame(
-                    _flatten_landmarks(result.hand_landmarks[0]))
+                    flatten_landmarks(result.hand_landmarks[0]))
 
     finally:
         hand_tracker.close()

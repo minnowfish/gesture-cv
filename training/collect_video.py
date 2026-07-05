@@ -3,39 +3,43 @@ import mediapipe as mp
 from data_recorder import DataRecorder
 from data_types import Gesture
 from hand_tracker import HandTracker
-
-_RADIUS = 5
-_COLOR = (0, 255, 0)
-_THICKNESS = 2
-
-keyToGesture: dict[str, Gesture] = {
-    '1': Gesture.GRAB,
-    '2': Gesture.PINCH_OPEN,
-    '3': Gesture.PINCH_CLOSE,
-}
-
-
-def _flatten_landmarks(landmarks) -> list[float]:
-    flat = []
-    for landmark in landmarks:
-        flat.extend([landmark.x, landmark.y, landmark.z])
-    return flat
-
+from sys import argv
+from data_types import RADIUS, COLOR, THICKNESS
+from utils import flatten_landmarks
 
 def main():
+
+    if len(argv) != 3:
+        print("Usage: collect_video.py <input_video> <gesture>")
+        return
+    
+    video_file = argv[1]
+
+    try:
+        gesture = Gesture(argv[2])
+    except ValueError:
+        valid = [g.value for g in Gesture]
+        print(f"Invalid gesture {argv[2]}. Must be one of: {valid}")
+        return
+
     hand_tracker = HandTracker()
     data_recorder = DataRecorder()
 
-    cam = cv2.VideoCapture(1)
+    cam = cv2.VideoCapture(video_file)
+    if not cam.isOpened():
+        raise ValueError(f"Could not open video file: {video_file}")
+
 
     try:
         frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
         frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+        data_recorder.start_recording(gesture)
+
         while True:
             ret, frame = cam.read()
             if not ret:
-                continue
+                break
 
             result = hand_tracker.process_frame(frame)
             if result is not None:
@@ -43,23 +47,18 @@ def main():
                     for landmark in hand:
                         pixel_x = int(landmark.x * frame_width)
                         pixel_y = int(landmark.y * frame_height)
-                        cv2.circle(frame, (pixel_x, pixel_y), _RADIUS, _COLOR,
-                                   _THICKNESS)
+                        cv2.circle(frame, (pixel_x, pixel_y), RADIUS, COLOR,
+                                   THICKNESS)
 
             cv2.imshow('Camera', frame)
-
-            key: int = cv2.waitKey(1)
-
-            if key != -1:
-                char_pressed = chr(key)
-                if char_pressed == 'q':
-                    break
-                elif char_pressed in keyToGesture:
-                    data_recorder.start_recording(keyToGesture[char_pressed])
+            cv2.waitKey(1)
 
             if result is not None and result.hand_landmarks and data_recorder.is_recording:
                 data_recorder.add_frame(
-                    _flatten_landmarks(result.hand_landmarks[0]))
+                    flatten_landmarks(result.hand_landmarks[0]))
+                # check if 60 frames have been recorded
+                if not data_recorder.is_recording:
+                    break
 
     finally:
         hand_tracker.close()
