@@ -5,6 +5,8 @@ __pycache__/
 
 # training samples
 data/*/*.csv
+videos/*
+!.gitkeep
 
 # model
 hand_landmarker.task
