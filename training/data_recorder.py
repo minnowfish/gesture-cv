@@ -1,7 +1,8 @@
-from typing import List, Optional
-from os import listdir
-import data_types
 import csv
+from os import listdir
+from typing import List, Optional
+
+import data_types
 
 
 class DataRecorder:
@@ -49,7 +50,3 @@ class DataRecorder:
             self.is_recording = False
             self.current_clip = []
             self.current_label = None
-
-
-# def main():
-#     # TODO()
