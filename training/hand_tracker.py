@@ -1,6 +1,7 @@
+import time
+
 import cv2
 import mediapipe as mp
-import time
 
 _MODEL_PATH = 'training/hand_landmarker.task'
 
