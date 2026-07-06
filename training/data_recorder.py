@@ -18,6 +18,8 @@ class DataRecorder:
         }  # tracks how many samples created of the following gesture
 
     def start_recording(self, label: Gesture) -> None:
+        assert isinstance(label, Gesture), "Error: invalid label to record: {label}"
+
         self.is_recording = True
         self.current_label = label
 
@@ -31,6 +33,7 @@ class DataRecorder:
                 self._save_clip()
 
     def _get_next_count(self, label: Gesture) -> int:
+        assert isinstance(label, Gesture), "Error: invalid label to record: {label}"
         if label not in self.clip_counters:
             label_dir = f"{self.output_dir}/{label.value}"
             self.clip_counters[label] = len(listdir(label_dir))
@@ -38,6 +41,8 @@ class DataRecorder:
         return self.clip_counters[label]
 
     def _save_clip(self) -> None:
+        assert self.current_label != None, "Error: current label not set"
+
         count = self._get_next_count(self.current_label)
         filename = f"{self.output_dir}/{self.current_label.value}/{count:03d}.csv"
 
