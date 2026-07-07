@@ -15,6 +15,7 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 class HandTracker:
 
     def __init__(self):
+        self._closed = False
         self._latest_result = None
         options = HandLandmarkerOptions(
             base_options=BaseOptions(model_asset_path=_MODEL_PATH),
@@ -33,10 +34,13 @@ class HandTracker:
         return (time.time() - self._start_time) * 1000
 
     def process_frame(self, frame: np.ndarray) -> HandLandmarkerResult | None:
+        if self._closed:
+            raise RuntimeError("ERROR: process_frame called after close()")
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(mp.ImageFormat.SRGB, rgb_frame)
         self._landmarker.detect_async(mp_image, int(self._get_timestamp()))
         return self._latest_result
 
     def close(self) -> None:
+        self._closed = True
         self._landmarker.close()
