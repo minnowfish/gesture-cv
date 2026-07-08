@@ -3,6 +3,7 @@ from os import listdir
 from typing import List, Optional
 
 import data_types
+from data_types import Gesture
 
 
 class DataRecorder:
