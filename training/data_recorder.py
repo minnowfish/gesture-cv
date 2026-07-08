@@ -50,8 +50,8 @@ class DataRecorder:
     def _save_clip(self) -> None:
         assert self._current_label != None, "Error: current label not set"
 
-        count = self._get_next_count(self.current_label)
-        filename = f"{self.output_dir}/{self.current_label.value}/{count:03d}.csv"
+        count = self._get_next_count(self._current_label)
+        filename = f"{self.output_dir}/{self._current_label.value}/{count:03d}.csv"
 
         try:
             with open(filename, "x", newline="") as f:
