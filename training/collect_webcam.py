@@ -11,6 +11,7 @@ keyToGesture: dict[str, Gesture] = {
     '3': Gesture.PINCH_CLOSE,
 }
 
+
 def main():
     hand_tracker = HandTracker()
     data_recorder = DataRecorder()
