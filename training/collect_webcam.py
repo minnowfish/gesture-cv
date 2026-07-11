@@ -1,9 +1,8 @@
 import cv2
 import mediapipe as mp
 from data_recorder import DataRecorder
-from data_types import Gesture
+from data_types import COLOR, RADIUS, THICKNESS, Gesture
 from hand_tracker import HandTracker
-from data_types import RADIUS, COLOR, THICKNESS
 from utils import flatten_landmarks
 
 keyToGesture: dict[str, Gesture] = {
@@ -11,6 +10,7 @@ keyToGesture: dict[str, Gesture] = {
     '2': Gesture.PINCH_OPEN,
     '3': Gesture.PINCH_CLOSE,
 }
+
 
 def main():
     hand_tracker = HandTracker()

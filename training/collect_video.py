@@ -1,18 +1,19 @@
+from sys import argv
+
 import cv2
 import mediapipe as mp
 from data_recorder import DataRecorder
-from data_types import Gesture
+from data_types import COLOR, RADIUS, THICKNESS, Gesture
 from hand_tracker import HandTracker
-from sys import argv
-from data_types import RADIUS, COLOR, THICKNESS
 from utils import flatten_landmarks
+
 
 def main():
 
     if len(argv) != 3:
         print("Usage: collect_video.py <input_video> <gesture>")
         return
-    
+
     video_file = argv[1]
 
     try:
@@ -28,7 +29,6 @@ def main():
     cam = cv2.VideoCapture(video_file)
     if not cam.isOpened():
         raise ValueError(f"Could not open video file: {video_file}")
-
 
     try:
         frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))

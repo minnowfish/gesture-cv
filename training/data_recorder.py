@@ -4,6 +4,7 @@ from typing import List, Optional
 from data_types import Gesture
 
 import data_types
+from data_types import Gesture
 
 
 class DataRecorder:
@@ -23,7 +24,8 @@ class DataRecorder:
         return self._is_recording
 
     def start_recording(self, label: Gesture) -> None:
-        assert isinstance(label, Gesture), "Error: invalid label to record: {label}"
+        assert isinstance(label,
+                          Gesture), "Error: invalid label to record: {label}"
 
         self._is_recording = True
         self._current_label = label
@@ -38,10 +40,11 @@ class DataRecorder:
                 self._save_clip()
 
     def _get_next_count(self, label: Gesture) -> int:
-        assert isinstance(label, Gesture), "Error: invalid label to record: {label}"
+        assert isinstance(label,
+                          Gesture), "Error: invalid label to record: {label}"
         if label not in self._clip_counters:
             label_dir = f"{self.output_dir}/{label.value}"
-            self._clip_counters[label] = len(listdir(label_dir))
+            self._clip_counters[label] = len(listdir(label_dir)) - 1 # -1 to account for .gitkeep file
         self._clip_counters[label] += 1
         return self._clip_counters[label]
 
