@@ -1,0 +1,16 @@
+import torch
+from torch import nn
+
+from data_types import NO_FRAMES, NO_LANDMARKS, FIRST_LAYER, SECOND_LAYER
+
+class model(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.flatten = nn.Flatten
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(NO_LANDMARKS * NO_FRAMES, FIRST_LAYER),
+            nn.ReLU(),
+            nn.Linear(FIRST_LAYER, SECOND_LAYER),
+            nn.ReLU(),
+            nn.Linear(SECOND_LAYER, 3)
+        )
