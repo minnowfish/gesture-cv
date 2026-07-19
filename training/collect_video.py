@@ -2,6 +2,7 @@ from sys import argv
 
 import cv2
 import mediapipe as mp
+
 from data_recorder import DataRecorder
 from data_types import COLOR, RADIUS, THICKNESS, Gesture
 from hand_tracker import HandTracker

@@ -1,7 +1,6 @@
 import csv
 from os import listdir
 from typing import List, Optional
-from data_types import Gesture
 
 import data_types
 from data_types import Gesture
@@ -44,7 +43,8 @@ class DataRecorder:
                           Gesture), "Error: invalid label to record: {label}"
         if label not in self._clip_counters:
             label_dir = f"{self.output_dir}/{label.value}"
-            self._clip_counters[label] = len(listdir(label_dir)) - 1 # -1 to account for .gitkeep file
+            self._clip_counters[label] = len(
+                listdir(label_dir)) - 1  # -1 to account for .gitkeep file
         self._clip_counters[label] += 1
         return self._clip_counters[label]
 
