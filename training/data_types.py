@@ -18,3 +18,4 @@ NO_LANDMARKS = 63
 # Hidden Layer Constants
 FIRST_LAYER = 128
 SECOND_LAYER = 64
+NO_OUTPUT = len(Gesture)
