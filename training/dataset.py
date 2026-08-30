@@ -24,6 +24,6 @@ class SubfolderDataset(Dataset):
 
     def __getitem__(self, idx):
         file_path, label = self.samples[idx]
-        sample = pd.read_csv(file_path).to_numpy()
+        sample = pd.read_csv(file_path, header = None).to_numpy()
         tensor = torch.from_numpy(sample).float()
         return (tensor, label)
