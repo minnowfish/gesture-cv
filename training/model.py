@@ -1,7 +1,7 @@
 from torch import nn
 
-from data_types import (FIRST_LAYER, NO_FRAMES, NO_LANDMARKS, NO_OUTPUT,
-                        SECOND_LAYER)
+from config import (FIRST_LAYER, NO_FRAMES, NO_LANDMARKS, NO_OUTPUT,
+                    SECOND_LAYER)
 
 
 class Model(nn.Module):
