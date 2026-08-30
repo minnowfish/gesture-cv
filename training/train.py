@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import random_split, DataLoader
 import torch.optim as optim
+from torch.utils.data import DataLoader, random_split
+
 from dataset import SubfolderDataset
 from model import Model
 
@@ -16,18 +17,20 @@ def main():
     dataset = SubfolderDataset()
     model = Model()
 
-    train_dataset, test_dataset = random_split(dataset, [TRAINING_SPLIT, TEST_SPLIT])
+    train_dataset, test_dataset = random_split(dataset,
+                                               [TRAINING_SPLIT, TEST_SPLIT])
 
-    train_dataloader = DataLoader(train_dataset, batch_size = BATCH_SIZE, shuffle = True)
-    test_dataloader = DataLoader(test_dataset, batch_size = BATCH_SIZE, shuffle = False)
+    train_dataloader = DataLoader(train_dataset,
+                                  batch_size=BATCH_SIZE,
+                                  shuffle=True)
+    test_dataloader = DataLoader(test_dataset,
+                                 batch_size=BATCH_SIZE,
+                                 shuffle=False)
 
     # train_features, train_labels = next(iter(train_dataloader))
 
     criterion = nn.CrossEntropyLoss()
-    optimiser = optim.Adam(
-        model.parameters(),
-        lr = LEARNING_RATE
-    )
+    optimiser = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
     # training loop
     for epoch in range(EPOCH):
@@ -45,15 +48,18 @@ def main():
         with torch.no_grad():
             for features, labels in test_dataloader:
                 predictions = model(features)
-                predicted = torch.argmax(predictions, dim = 1)
+                predicted = torch.argmax(predictions, dim=1)
                 correct += (predicted == labels).sum().item()
                 total += labels.size(0)
                 loss = criterion(predictions, labels)
                 total_loss += loss.item()
-            
-        print(f"Epoch {epoch + 1}, Loss: {total_loss/len(test_dataloader)}, Test Accuracy: {correct/total * 100}%")
+
+        print(
+            f"Epoch {epoch + 1}, Loss: {total_loss/len(test_dataloader)}, Test Accuracy: {correct/total * 100}%"
+        )
 
     torch.save(model.state_dict(), "model/model.pth")
+
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,8 @@
 from data_types import Gesture
 
 # File Paths
-MODE_WEIGHTS_PATH = "model/model.pth"
+MODEL_WEIGHTS_PATH = "model/model.pth"
+MODEL_SCRIPT_PATH = "model/gesture_classifier.pt"
 DATA_DIR = "training/data"
 
 # OpenCV Constants

@@ -1,6 +1,7 @@
 import csv
 from os import listdir
 from typing import List, Optional
+
 from config import DATA_DIR
 from data_types import Gesture
 
