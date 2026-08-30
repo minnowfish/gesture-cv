@@ -53,5 +53,7 @@ def main():
             
         print(f"Epoch {epoch + 1}, Loss: {total_loss/len(test_dataloader)}, Test Accuracy: {correct/total * 100}%")
 
+    torch.save(model.state_dict(), "model/model.pth")
+
 if __name__ == "__main__":
     main()
