@@ -1,9 +1,8 @@
 import torch
 import pandas as pd
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 from pathlib import Path
-
-DATA_DIR = "training/data"
+from config import DATA_DIR
 
 class SubfolderDataset(Dataset):
     def __init__(self, root_dir = DATA_DIR):

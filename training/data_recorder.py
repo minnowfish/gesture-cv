@@ -1,14 +1,13 @@
 import csv
 from os import listdir
 from typing import List, Optional
-
-import data_types
+from config import DATA_DIR
 from data_types import Gesture
 
 
 class DataRecorder:
 
-    def __init__(self, output_dir="training/data", clip_length=60):
+    def __init__(self, output_dir=DATA_DIR, clip_length=60):
         self.output_dir: str = output_dir
         self._clip_length: int = clip_length
         self._is_recording: bool = False
