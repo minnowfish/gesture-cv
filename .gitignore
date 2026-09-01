@@ -6,3 +6,7 @@
 
 # model file
 model/*pth
+model/*pt
+
+#test files
+tests/
