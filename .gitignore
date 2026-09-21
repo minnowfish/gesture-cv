@@ -10,3 +10,6 @@ model/*pt
 
 #test files
 tests/
+
+#build files
+runtime/build/*
