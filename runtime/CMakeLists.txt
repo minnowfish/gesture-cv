@@ -25,3 +25,9 @@ target_link_libraries(gesture_runtime
     glfw
     ${OpenCV_LIBS}
 )
+
+add_custom_target(run
+    COMMAND ${CMAKE_BINARY_DIR}/gesture_runtime
+    DEPENDS gesture_runtime
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}    
+)
